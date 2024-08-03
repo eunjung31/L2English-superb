@@ -21,15 +21,11 @@ first_parts = [
 ]
 
 second_parts = [
-    "Consider the smoothness and flow of speech, including any pauses, repetitions, and stammering.",
-    "Focus on the smoothness and flow of speech, checking for pauses, repetitions, and stammering.",
-    "Consider the smoothness and continuity of speech, including the presence of pauses, repetitions, and stammering.",
-    "Take into account the smoothness and flow of speech, including any interruptions such as pauses, repetitions, and stammering.",
-    "Focus on the flow and smoothness of speech, noting the occurrence of pauses, repetitions, and stammering.",
-    "Consider how smoothly the speech flows, including the presence of pauses, repetitions, and stammering.",
-    "Focus on the smoothness and continuity of speech, noting any pauses, repetitions, and stammering.",
-    "Consider the flow and smoothness of speech, including pauses, repetitions, and stammering.",
-    "Focus on the smoothness and flow of speech, checking for any interruptions such as pauses, repetitions, and stammering.",
+    "Take into account the smoothness and flow of speech, noting any pauses, repetitions, and stammering.",
+    "Evaluate the speech's smoothness and flow, including pauses, repetitions, and stammering.",
+    "Pay attention to the smoothness and flow of speech, considering any pauses, repetitions, and stammering.",
+    "Assess the smoothness and flow of the speech, noting any instances of pauses, repetitions, and stammering.",
+    "Examine the speech for smoothness and flow, paying attention to pauses, repetitions, and stammering."
 ]
 
 third_parts = [
@@ -187,4 +183,4 @@ if __name__ == "__main__":
 
     # Push to Hugging Face
     validate_dataset(paired_ds)
-    # paired_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishFluency_speechocean762-BinaryAccuracy", split="test", token=os.environ["HF_TOKEN"])
+    paired_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishFluency_speechocean762-Ranking", split="test", token=os.environ["HF_TOKEN"])

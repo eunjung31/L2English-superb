@@ -175,4 +175,4 @@ if __name__ == "__main__":
 
     # Push to Hugging Face
     validate_dataset(paired_ds)
-    paired_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishAccuracy_speechocean762-BinaryAccuracy", split="test", token=os.environ["HF_TOKEN"])
+    paired_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishAccuracy_speechocean762-Ranking", split="test", token=os.environ["HF_TOKEN"])
