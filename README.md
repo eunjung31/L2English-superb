@@ -36,4 +36,4 @@ ds.push_to_hub(repo_id="your/repo_id", split="test", token=os.environ["HF_TOKEN"
 
 ## References
 [1] https://github.com/juice500ml/linguistic-superb
-[2] 
+[2] Zhang, Junbo and Zhang, Zhiwen and Wang, Yongqing and Yan, Zhiyong and Song, Qiong and Huang, Yukai and Li, Ke and Povey, Daniel and Wang, Yujun (2021). speechocean762: An open-source non-native english speech corpus for pronunciation assessment. In *proc. Interspeech 2021*
