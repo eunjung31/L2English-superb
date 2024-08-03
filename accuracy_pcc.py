@@ -51,6 +51,9 @@ if __name__ == "__main__":
                       num_proc=64)
     new_ds = ds["test"]
 
+    ## exclude score 0 which indicates "no voice".
+    new_ds = new_ds.filter(lambda x: x["accuracy"] != 0)
+
     # Categorize the samples by labels
     length_categories = defaultdict(list)
     for i, sample in enumerate(new_ds):
@@ -80,4 +83,4 @@ if __name__ == "__main__":
 
     # Push to Hugging Face
     validate_dataset(new_ds)
-    new_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishAccuracy_speechocean762-PCC", split="test", token=os.environ["HF_TOKEN"])
+    new_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishAccuracy_speechocean762-Scoring", split="test", token=os.environ["HF_TOKEN"])

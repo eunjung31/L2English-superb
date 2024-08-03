@@ -51,10 +51,13 @@ if __name__ == "__main__":
                       num_proc=64)
     new_ds = ds["test"]
 
+    ## exclude score 0 which indicates "no voice".
+    new_ds = new_ds.filter(lambda x: x["fluency"] != 0)
+
     # Categorize the samples by labels
     length_categories = defaultdict(list)
     for i, sample in enumerate(new_ds):
-        length_categories[sample["prosodic"]].append(i)
+        length_categories[sample["fluency"]].append(i)
 
     # Randomly select 30% of the samples for each label
     selected_indices = []
@@ -73,11 +76,11 @@ if __name__ == "__main__":
             "audio": sample["audio"],
             "file": sample["audio"]["path"].replace('.wav', ''),
             "instruction": instructions[index % len(instructions)],
-            "label": str(sample["prosodic"]),
+            "label": str(sample["fluency"]),
         }
     new_ds = new_ds.map(_map, with_indices=True, remove_columns=ds["test"].column_names)
     new_ds = new_ds.cast_column("audio", Audio(sampling_rate=16_000))
 
     # Push to Hugging Face
     validate_dataset(new_ds)
-    new_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishProsodic_speechocean762-PCC", split="test", token=os.environ["HF_TOKEN"])
+    new_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishFluency_speechocean762-Scoring", split="test", token=os.environ["HF_TOKEN"])
