@@ -8,19 +8,29 @@ from utils import validate_dataset
 import itertools
 
 first_parts = [
-    "Listen to both the first and second audio samples and evaluate their fluency.",
-    "Evaluate the fluency of the first and second audio samples.",
-    "Assess the fluency of both the first and second audio samples.",
-    "Listen to the first and second audio samples and rate their fluency.",
-    "Compare the fluency between the first and second audio samples.",
+    "Listen to the audio and assess the smoothness and flow of speech, paying attention to pauses, repetitions, and stammering.",
+    "Evaluate the audio for smoothness and speech flow, noting any pauses, repetitions, and stammering.",
+    "Listen to the recording and focus on the smoothness and flow of speech, checking for instances of pauses, repetitions, and stammering.",
+    "Assess the audio by concentrating on the smoothness and flow of speech, identifying any pauses, repetitions, and stammering.",
+    "Evaluate the recording with an emphasis on the smoothness and flow of speech, observing any pauses, repetitions, and stammering.",
+    "Listen to the audio, focusing on the smoothness and flow of the speech, and note any pauses, repetitions, and stammering.",
+    "Assess the recording for smoothness and the flow of speech, looking out for pauses, repetitions, and stammering.",
+    "Evaluate the speech in the audio, concentrating on its smoothness and flow, and checking for pauses, repetitions, and stammering.",
+    "Listen and focus on the audio’s smoothness and speech flow, identifying any pauses, repetitions, and stammering.",
+    "Assess the audio, emphasizing the smoothness and flow of speech, and note any pauses, repetitions, and stammering."
 ]
 
 second_parts = [
     "Consider the smoothness and flow of speech, including any pauses, repetitions, and stammering.",
     "Focus on the smoothness and flow of speech, checking for pauses, repetitions, and stammering.",
+    "Consider the smoothness and continuity of speech, including the presence of pauses, repetitions, and stammering.",
     "Take into account the smoothness and flow of speech, including any interruptions such as pauses, repetitions, and stammering.",
     "Focus on the flow and smoothness of speech, noting the occurrence of pauses, repetitions, and stammering.",
+    "Consider how smoothly the speech flows, including the presence of pauses, repetitions, and stammering.",
+    "Focus on the smoothness and continuity of speech, noting any pauses, repetitions, and stammering.",
+    "Consider the flow and smoothness of speech, including pauses, repetitions, and stammering.",
     "Focus on the smoothness and flow of speech, checking for any interruptions such as pauses, repetitions, and stammering.",
+    "Assess the clarity and correctness of pronunciation by considering accurate phonology, presence of pronunciation errors, and overall understandability."
 ]
 
 third_parts = [
@@ -35,7 +45,7 @@ third_parts = [
 instructions = [f + " " + s + " " + t for f, s, t in itertools.product(first_parts, second_parts, third_parts)]
 
 ## utterance 0<=score<=3 is only 1. So we combine score 0~4 to score 1.
-## score distribution: {1: 161, 2: 299, 3:1343, 4: 767}
+## score distribution: {1: 837, 2: 1258, 3:291, 4: 67}
 def map_scores(score):
     if 0 <= score <= 4:
         return 1
@@ -124,6 +134,9 @@ if __name__ == "__main__":
                       num_proc=64)
     new_ds = ds["test"]
 
+    original_score_counts = count_utterances_by_score(new_ds, score_keys=["fluency"])
+    print("Original score counts:", dict(original_score_counts))
+
     # Reformatting and mapping scores
     new_ds = new_ds.map(reformat_and_map, with_indices=True)
 
@@ -175,4 +188,4 @@ if __name__ == "__main__":
 
     # Push to Hugging Face
     validate_dataset(paired_ds)
-    paired_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishFluency_speechocean762-BinaryAccuracy", split="test", token=os.environ["HF_TOKEN"])
+    # paired_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishFluency_speechocean762-BinaryAccuracy", split="test", token=os.environ["HF_TOKEN"])
