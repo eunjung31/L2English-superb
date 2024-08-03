@@ -30,7 +30,6 @@ second_parts = [
     "Focus on the smoothness and continuity of speech, noting any pauses, repetitions, and stammering.",
     "Consider the flow and smoothness of speech, including pauses, repetitions, and stammering.",
     "Focus on the smoothness and flow of speech, checking for any interruptions such as pauses, repetitions, and stammering.",
-    "Assess the clarity and correctness of pronunciation by considering accurate phonology, presence of pronunciation errors, and overall understandability."
 ]
 
 third_parts = [
@@ -45,7 +44,7 @@ third_parts = [
 instructions = [f + " " + s + " " + t for f, s, t in itertools.product(first_parts, second_parts, third_parts)]
 
 ## utterance 0<=score<=3 is only 1. So we combine score 0~4 to score 1.
-## score distribution: {1: 837, 2: 1258, 3:291, 4: 67}
+## score distribution: {1:67, 2:291, 3:1258, 4:837}
 def map_scores(score):
     if 0 <= score <= 4:
         return 1
