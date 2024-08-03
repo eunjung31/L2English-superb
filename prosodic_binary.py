@@ -35,7 +35,7 @@ third_parts = [
 instructions = [f + " " + s + " " + t for f, s, t in itertools.product(first_parts, second_parts, third_parts)]
 
 ## utterance 0<=score<=3 is only 1. So we combine score 0~4 to score 1.
-## score distribution: {1: 161, 2: 299, 3:1343, 4: 767}
+## score distribution: {1: 96, 2: 409, 3:1358, 4: 590}
 def map_scores(score):
     if 0 <= score <= 4:
         return 1
@@ -125,6 +125,9 @@ if __name__ == "__main__":
                       num_proc=64)
     new_ds = ds["test"]
 
+    original_score_counts = count_utterances_by_score(new_ds, score_keys=["fluency"])
+    print("Original score counts:", dict(original_score_counts))
+
     # Reformatting and mapping scores
     new_ds = new_ds.map(reformat_and_map, with_indices=True)
 
@@ -176,4 +179,4 @@ if __name__ == "__main__":
 
     # Push to Hugging Face
     validate_dataset(paired_ds)
-    paired_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishProsodic_speechocean762-BinaryAccuracy", split="test", token=os.environ["HF_TOKEN"])
+    # paired_ds.push_to_hub(repo_id="DynamicSuperb/L2EnglishProsodic_speechocean762-BinaryAccuracy", split="test", token=os.environ["HF_TOKEN"])
